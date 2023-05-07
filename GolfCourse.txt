@@ -1,0 +1,19 @@
+C,Whistling Straits,72,18
+H,1,Outward Bound,4
+H,2,Cross Country,5
+H,3,O'Man,3
+H,4,Glory,4
+H,5,Snake,5
+H,6,Gremlin's Ear,4
+H,7,Shipwreck,3
+H,8,On the Rocks,4
+H,9,Down and Dirty,4
+H,10,Voyageur,4
+H,11,Sand Box,5
+H,12,Pop up,3
+H,13,Cliff Hanger,4
+H,14,Widow's Watch,4
+H,15,Grand Stand,4
+H,16,Endless Bite,5
+H,17,Pinched Nerve,3
+H,18,Dyeabolical,4
