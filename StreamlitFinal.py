@@ -4,7 +4,9 @@ import pandas as pd
 from streamlit_lottie import st_lottie
 import json
 import plotly.graph_objects as go
-from streamlit_disqus import st_disqus
+import streamlit.components.v1 as components
+import time
+import random
 
 class GolfCourse:
     def __init__(self, name: str, hole_count: int, par: int, holes: List["Hole"]):
@@ -144,7 +146,7 @@ def main():
     # Display the app title and description
     st.title("⛳Golf Score Tracker")
     st.success("_Welcome to the Golf Score Tracker app! Use this app to keep track of your golf scores and view your shot categories for each hole._")
-    course_file = st.file_uploader("Upload a golf course file:", type="txt", help=f"Golf course files should be formated-Course: C,Whistling Straits,72,18 Holes: H,1,Outward Bound,4")
+    course_file = st.file_uploader("Upload a golf course file:", type="txt", help=f"🗃️ Golf course files should be formated-Course: C,Whistling Straits,72,18 Holes: H,1,Outward Bound,4")
     if course_file is not None:
         try:
             course = load_course(course_file.name)
@@ -187,29 +189,23 @@ def main():
             # Display the score chart
             st.plotly_chart(create_score_chart(golfer, course.par, course), use_container_width=True)
         with tab2:
-            st.header("📧 Get In Touch With Me!", help="🚨Please note that after submitting a FormSubmit page will open in a new tab. Any data entered on this page will not be carried over to the link inside the FormSubmit page.")
-            
-            contact_form = """
-                <form id="contact-form" action="https://formsubmit.co/ee687c82ad8ce442e4a16e504712dcc8" method="POST" target=_blank>
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="name" name="name" placeholder="Your name" required>
-                    <input type="email" name="email" placeholder="Your email" required>
-                    <textarea name="message" placeholder="Your message here"></textarea>
-                    <button type="submit">Send</button>
-                    <button type="reset" value="Reset">Clear</button>
-                    <input type="hidden" name="next" value="Thank you for your message!">
-                </form>
-                """
+            st.subheader("📧 Get in Touch With Me!")
+            if st.button("🔄️Reload", help="❔ Reload to send another message!"):
+                st.experimental_rerun()
 
-            st.markdown(contact_form, unsafe_allow_html=True)
+            timestamp = int(time.time())
+            random_num = random.randint(1, 1000000)
+            url = f"https://formsubmit.co/el/vitesu?timestamp={timestamp}&random={random_num}"
 
-            # Use Local CSS File
-            def local_css(file_name):
-                with open(file_name) as f:
-                    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+            # Define the height of the iframe
+            height = 750
 
+            # Use the IFrame component to embed the webpage
+            components.iframe(url, height=height, width=750)
 
-            local_css("style/style.css")
+ 
+        
+
 
     golfer = load_lottiefile("Golfer.json")
     with st.sidebar:
