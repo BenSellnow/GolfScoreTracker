@@ -195,7 +195,7 @@ def main():
 
             timestamp = int(time.time())
             random_num = random.randint(1, 1000000)
-            url = f"https://formsubmit.co/el/vitesu"
+            url = f"https://formsubmit.co/el/vitesu?/embed=true"
 
             # Define the height of the iframe
             height = 750
