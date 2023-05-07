@@ -69,5 +69,5 @@ After entering the scores, the application will display a chart of the golfer's 
 
 The Streamlit Lottie library was used to display the animation of a golf ball being hit in the app's sidebar.
 
-Contact form provided by [FormSubmit](https://formsubmit.co/
+Contact form provided by [FormSubmit](https://formsubmit.co/)
 
