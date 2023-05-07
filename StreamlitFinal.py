@@ -5,8 +5,7 @@ from streamlit_lottie import st_lottie
 import json
 import plotly.graph_objects as go
 import streamlit.components.v1 as components
-import time
-import random
+
 
 class GolfCourse:
     def __init__(self, name: str, hole_count: int, par: int, holes: List["Hole"]):
@@ -190,11 +189,7 @@ def main():
             st.plotly_chart(create_score_chart(golfer, course.par, course), use_container_width=True)
         with tab2:
             st.subheader("📧 Get in Touch With Me!")
-            if st.button("🔄️Reload", help="❔ Reload to send another message!"):
-                st.experimental_rerun()
 
-            timestamp = int(time.time())
-            random_num = random.randint(1, 1000000)
             url = f"https://formsubmit.co/el/vitesu?next=https://formsubmit.co/el/vitesu"
 
             # Define the height of the iframe
