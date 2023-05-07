@@ -29,7 +29,7 @@ streamlit run <filename.py>
 
 ### Load a Golf Course
 
-First, you need to load a golf course. You can do this by uploading a `.csv` file containing the course information. The file should have the following format:
+First, you need to load a golf course. You can do this by uploading a `.txt` file containing the course information. The file should have the following information:
 
 | Format | Description                   |
 |--------|-------------------------------|
@@ -41,6 +41,12 @@ First, you need to load a golf course. You can do this by uploading a `.csv` fil
 |        | Hole Number                   |
 |        | Hole Name                     |
 |        | Par                           |
+
+In this format:
+```txt
+C, Course Name, Par, Hole Count
+H, Hole Number, Hole Name, Par
+```
 
 
 ### Enter Golfer Information and Scores
