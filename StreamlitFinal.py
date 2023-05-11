@@ -5,7 +5,7 @@ from streamlit_lottie import st_lottie
 import json
 import plotly.graph_objects as go
 import streamlit.components.v1 as components
-
+import os
 
 class GolfCourse:
     def __init__(self, name: str, hole_count: int, par: int, holes: List["Hole"]):
@@ -28,26 +28,27 @@ class Hole:
         self.par = par
 
 
-def load_course(filename):
+def load_course(filepath):
     try:
-        with open(filename, "r") as file:
+        with open(filepath, "r") as file:
             lines = file.readlines()
             name, par, hole_count = None, None, None
             holes = []
-        for line in lines:
-            tokens = line.strip().split(",")
-            if tokens[0] == "C":
-                name = tokens[1]
-                par = int(tokens[2])
-                hole_count = int(tokens[3])
-            elif tokens[0] == "H":
-                hole_number = int(tokens[1])
-                hole_name = tokens[2]
-                hole_par = int(tokens[3])
-                holes.append(Hole(hole_number, hole_name, hole_par))
-        return GolfCourse(name, hole_count, par, holes)
+            for line in lines:
+                tokens = line.strip().split(",")
+                if tokens[0] == "C":
+                    name = tokens[1]
+                    par = int(tokens[2])
+                    hole_count = int(tokens[3])
+                elif tokens[0] == "H":
+                    hole_number = int(tokens[1])
+                    hole_name = tokens[2]
+                    hole_par = int(tokens[3])
+                    holes.append(Hole(hole_number, hole_name, hole_par))
+            return GolfCourse(name, hole_count, par, holes)
     except FileNotFoundError:
-        st.error("Invalid file type: please choose a valid course file.")
+        st.error("File not found. Please choose a valid course file.")
+        return None
     
 
 
@@ -137,7 +138,38 @@ def create_score_chart(golfer: Golfer, par: int, course: GolfCourse) -> go.Figur
     # Show the chart
     return fig
 
+def download_text_file():
+    text = '''C,Whistling Straits,72,18
+H,1,Outward Bound,4
+H,2,Cross Country,5
+H,3,O'Man,3
+H,4,Glory,4
+H,5,Snake,5
+H,6,Gremlin's Ear,4
+H,7,Shipwreck,3
+H,8,On the Rocks,4
+H,9,Down and Dirty,4
+H,10,Voyageur,4
+H,11,Sand Box,5
+H,12,Pop up,3
+H,13,Cliff Hanger,4
+H,14,Widow's Watch,4
+H,15,Grand Stand,4
+H,16,Endless Bite,5
+H,17,Pinched Nerve,3
+H,18,Dyeabolical,4'''
 
+    # Convert text to bytes
+    text_bytes = text.replace('\n', '\r\n').encode('utf-8')
+
+    
+    # Set up download button
+    st.download_button(
+        label='🧪 Download Test File',
+        data=text_bytes,
+        file_name='GolfCourse.txt',
+        mime='text/plain'
+    )
 
 def main():
     st.set_page_config(page_title="Golf Score Tracker", page_icon=":golf:", layout="wide")
@@ -146,10 +178,17 @@ def main():
     st.title("⛳Golf Score Tracker")
     st.success("_Welcome to the Golf Score Tracker app! Use this app to keep track of your golf scores and view your shot categories for each hole._")
     course_file = st.file_uploader("Upload a golf course file:", type="txt", help=f"🗃️ Golf course files should be formated-Course: C,Whistling Straits,72,18 Holes: H,1,Outward Bound,4")
+    with st.expander("👇 Download a example file"):
+        download_text_file()
     if course_file is not None:
         try:
-            course = load_course(course_file.name)
-            st.subheader(f"⛳Loaded course: {course.name} ({course.hole_count} holes, par {course.par})")
+            file_path = os.path.join(os.getcwd(), course_file.name)
+            with open(file_path, "wb") as file:
+                file.write(course_file.getvalue())
+            course = load_course(file_path)
+            if course is not None:
+                st.subheader(f"⛳Loaded course: {course.name} ({course.hole_count} holes, par {course.par})")
+            os.remove(file_path)
         except ValueError:
             st.error("Invalid file type. Please upload a valid text file.")
             return
