@@ -41,10 +41,16 @@ def load_course(filepath):
                     par = int(tokens[2])
                     hole_count = int(tokens[3])
                 elif tokens[0] == "H":
+                    if len(tokens) != 4:  # Validate the number of tokens
+                        st.error("Invalid file format. Please upload a valid golf course file.")
+                        return None
                     hole_number = int(tokens[1])
                     hole_name = tokens[2]
                     hole_par = int(tokens[3])
                     holes.append(Hole(hole_number, hole_name, hole_par))
+            if name is None or par is None or hole_count is None:
+                st.error("Invalid file format. Please upload a valid golf course file.")
+                return None
             return GolfCourse(name, hole_count, par, holes)
     except FileNotFoundError:
         st.error("File not found. Please choose a valid course file.")
@@ -179,6 +185,7 @@ def main():
     st.success("_Welcome to the Golf Score Tracker app! Use this app to keep track of your golf scores and view your shot categories for each hole._")
     course_file = st.file_uploader("Upload a golf course file:", type="txt", help=f"🗃️ Golf course files should be formatted-Course: C,Whistling Straits,72,18 Holes: H,1,Outward Bound,4")
     show_expander = True
+    course = None
 
     if course_file is not None:
         try:
@@ -202,6 +209,7 @@ def main():
     else:
         st.divider()
 
+    if course is not None:    
         golfer = get_golfer_scores(course.holes)
         
     
