@@ -41,7 +41,8 @@ def load_course(filepath):
                     par = int(tokens[2])
                     hole_count = int(tokens[3])
                 elif tokens[0] == "H":
-                    if len(tokens) != 4:  # Validate the number of tokens
+                    if len(tokens) != 4:
+                        # Validate the number of tokens
                         st.error("Invalid file format. Please upload a valid golf course file.")
                         return None
                     hole_number = int(tokens[1])
@@ -51,9 +52,9 @@ def load_course(filepath):
             if name is None or par is None or hole_count is None:
                 st.error("Invalid file format. Please upload a valid golf course file.")
                 return None
-            return GolfCourse(name, hole_count, par, holes)
-    except FileNotFoundError:
-        st.error("File not found. Please choose a valid course file.")
+            return Course(name, par, hole_count, holes)
+    except IndexError:
+        st.error("Invalid file format. Please upload a valid golf course file.")
         return None
     
 
