@@ -177,9 +177,9 @@ def main():
     # Display the app title and description
     st.title("⛳Golf Score Tracker")
     st.success("_Welcome to the Golf Score Tracker app! Use this app to keep track of your golf scores and view your shot categories for each hole._")
-    course_file = st.file_uploader("Upload a golf course file:", type="txt", help=f"🗃️ Golf course files should be formated-Course: C,Whistling Straits,72,18 Holes: H,1,Outward Bound,4")
-    with st.expander("👇 Download a example file"):
-        download_text_file()
+    course_file = st.file_uploader("Upload a golf course file:", type="txt", help=f"🗃️ Golf course files should be formatted-Course: C,Whistling Straits,72,18 Holes: H,1,Outward Bound,4")
+    show_expander = True
+
     if course_file is not None:
         try:
             file_path = os.path.join(os.getcwd(), course_file.name)
@@ -189,11 +189,18 @@ def main():
             if course is not None:
                 st.subheader(f"⛳Loaded course: {course.name} ({course.hole_count} holes, par {course.par})")
             os.remove(file_path)
+            show_expander = False
         except ValueError:
             st.error("Invalid file type. Please upload a valid text file.")
             return
         except AttributeError:
             return
+
+    if show_expander:
+        with st.expander("👇 Download an example file"):
+            download_text_file()
+    else:
+        st.divider()
 
         golfer = get_golfer_scores(course.holes)
         
