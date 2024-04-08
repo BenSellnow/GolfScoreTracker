@@ -257,7 +257,7 @@ def main():
             height = 750
         
             # Display the iframe
-            components.iframe("https://formsubmit.co/el/vitesu?next=https://formsubmit.co/el/vitesu", height=height, width=750)
+            components.iframe("https://formsubmit.co/el/vitesu", height=height, width=750)
 
  
         
