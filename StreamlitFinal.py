@@ -254,7 +254,7 @@ def main():
             st.subheader("📧 Get in Touch With Me!")
         
             # Define the URL for the iframe to display the FormSubmit URL
-            iframe_url = "https://formsubmit.co/el/vitesu?next=https://formsubmit.co/el/vitesu&_captcha=false"
+            iframe_url = "https://formsubmit.co/el/vitesu?next=https://formsubmit.co/el/vitesu"
         
             # Define the height of the iframe
             height = 750
