@@ -265,8 +265,8 @@ def main():
             </form>
             """
         
-            # Use "Unsafe use of markdown/html" to embed the HTML form within an iframe
-            st.markdown(f'<iframe srcdoc="{form_html}" width=750 height=750></iframe>', unsafe_allow_html=True)
+            # Use the IFrame component to embed the HTML form
+            components.iframe(srcdoc=form_html, height=750, width=750)
 
  
         
