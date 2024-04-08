@@ -265,8 +265,14 @@ def main():
             </form>
             """
         
-            # Use the IFrame component to embed the HTML form
-            components.iframe(srcdoc=form_html, height=750, width=750)
+            # Define the height of the iframe
+            height = 750
+        
+            # Define the URL for the iframe to display the HTML form
+            iframe_url = f"data:text/html,{form_html.replace(' ', '%20')}"
+        
+            # Display the iframe
+            st.markdown(f'<iframe src="{iframe_url}" width=750 height={height}></iframe>', unsafe_allow_html=True)
 
  
         
