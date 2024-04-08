@@ -253,26 +253,14 @@ def main():
         with tab2:
             st.subheader("📧 Get in Touch With Me!")
         
-            # Define the HTML code for the form with the hidden fields
-            form_html = """
-            <form action="https://formsubmit.co/el/vitesu" method="POST">
-              <input type="hidden" name="_next" value="https://formsubmit.co/el/vitesu">
-              <input type="hidden" name="_captcha" value="false">
-              <!-- Other form fields go here -->
-              <input type="email" name="email" placeholder="Your Email">
-              <textarea name="message" placeholder="Your Message"></textarea>
-              <input type="submit" value="Submit">
-            </form>
-            """
+            # Define the URL for the iframe to display the FormSubmit URL
+            iframe_url = "https://formsubmit.co/el/vitesu?next=https://formsubmit.co/el/vitesu&_captcha=false"
         
             # Define the height of the iframe
             height = 750
         
-            # Define the URL for the iframe to display the HTML form
-            iframe_url = f"data:text/html,{form_html.replace(' ', '%20')}"
-        
             # Display the iframe
-            st.markdown(f'<iframe src="{iframe_url}" width=750 height={height}></iframe>', unsafe_allow_html=True)
+            components.iframe(iframe_url, height=height, width=750)
 
  
         
