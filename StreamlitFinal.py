@@ -252,14 +252,21 @@ def main():
             st.plotly_chart(create_score_chart(golfer, course.par, course), use_container_width=True)
         with tab2:
             st.subheader("📧 Get in Touch With Me!")
-
-            url = f"https://formsubmit.co/el/vitesu?next=https://formsubmit.co/el/vitesu"
-
-            # Define the height of the iframe
-            height = 750
-
-            # Use the IFrame component to embed the webpage
-            components.iframe(url, height=height, width=750)
+        
+            # Define the HTML code for the form with the hidden fields
+            form_html = """
+            <form action="https://formsubmit.co/el/vitesu" method="POST">
+              <input type="hidden" name="_next" value="https://formsubmit.co/el/vitesu">
+              <input type="hidden" name="_captcha" value="false">
+              <!-- Other form fields go here -->
+              <input type="email" name="email" placeholder="Your Email">
+              <textarea name="message" placeholder="Your Message"></textarea>
+              <input type="submit" value="Submit">
+            </form>
+            """
+        
+            # Use "Unsafe use of markdown/html" to embed the HTML form within an iframe
+            st.markdown(f'<iframe srcdoc="{form_html}" width=750 height=750></iframe>', unsafe_allow_html=True)
 
  
         
