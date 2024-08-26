@@ -1,4 +1,4 @@
-pandas==1.5.2
+pandas
 plotly==5.11.0
 streamlit
 streamlit_lottie==0.0.3
