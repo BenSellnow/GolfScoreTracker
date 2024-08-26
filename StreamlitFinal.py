@@ -273,7 +273,10 @@ def main():
         
         )
 
-
+sentiment_mapping = ["one", "two", "three", "four", "five"]
+selected = st.sidebar.feedback("stars")
+if selected is not None:
+    st.sidebar.markdown(f"You selected {sentiment_mapping[selected]} star(s).")
 
 if __name__ == "__main__":
     main()
